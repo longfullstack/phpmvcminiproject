@@ -1,19 +1,15 @@
 <?php
-include_once("Connection.php");
+include_once("Model.php");
 include_once("StudentEntity.php");
 
-class StudentModel
+class StudentModel extends Model
 {
-	private $connection;
 	public function __construct() 
 	{
-		// Khởi tạo Object Connection để sử dụng
-		$connection = new Connection();
-		// Gán connection được khởi tạo bởi Object Connection vào property của StudentModel để sử dụng
-		$this->connection = $connection->connection;
+		return parent::__construct();
 	}
 	
-	public function getAllStudents() 
+	public function list() 
 	{
 		$query = 'SELECT * FROM students';
 		$results = $this->connection->query($query);
@@ -26,10 +22,10 @@ class StudentModel
 		return $students;
 	}
 	
-	public function getStudentDetail($stid) 
+	public function detail($id) 
 	{
 		//Gia su rang ta load data tu CSDL
-		$allStudent = $this->getAllStudents();
-		return $allStudent[$stid];
+		$allStudent = $this->list();
+		return $allStudent[$id];
 	}
 }

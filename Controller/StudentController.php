@@ -14,13 +14,13 @@ class  StudentController
 	public function invoke(){
 				if(isset($_GET['stid'])) { // Check nếu có student id thì load view xem detail
 			$modelStudent =  new StudentModel();
-			$student = $modelStudent->getStudentDetail($_GET['stid']);
+			$student = $modelStudent->detail($_GET['stid']);
 			
 			include_once("../View/StudentDetail.html");
 		} else { // Check nếu không có studen id thì load view xem danh sách
 
 			$modelStudent =  new StudentModel();
-			$studentList = $modelStudent->getAllStudents();
+			$studentList = $modelStudent->list();
 			
 			include_once("../View/StudentList.html");
 		}
