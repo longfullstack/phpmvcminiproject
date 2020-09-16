@@ -1,6 +1,11 @@
 <div class="container">
     <div class="col-8 mx-auto login-box">
-        <form method="post" action="../../Controller/HomeController.php">
+        <form method="post" action="Controller/HomeController.php">
+            <?php if(isset($error)): ?>
+            <p class="alert <?php echo $error['code'] == 0 ? 'alert-success' : 'alert-danger' ?>">
+                <?php echo $error['message']; ?>
+            </p>
+            <?php endif; ?>
             <div class="form-group">
                 <label class="col-12">Username</label>
                 <div class="col-12">

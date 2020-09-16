@@ -28,4 +28,9 @@ class StudentModel extends Model
 		$allStudent = $this->list();
 		return $allStudent[$id];
 	}
+
+	public function save($student)
+	{
+		
+	}
 }
