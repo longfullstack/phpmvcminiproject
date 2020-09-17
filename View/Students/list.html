@@ -3,14 +3,16 @@
     <h2>Danh sach hoc sinh:</h2>
 
     <?php
-	
-		for($i = 1; $i <= sizeof($studentList); $i++)
+		$i = 1;
+		foreach($studentList as $student)
 		{
-			echo  "<p>" .$i .". <a href='?stid=" .$studentList[$i]->id ."'>" .$studentList[$i]->name ."</a></p>";
+			echo  "<p>" .$i .". <a href='Controller/StudentController.php?view=update&id=" .$student->id ."'>" .$student->name ."</a>&nbsp;&nbsp;<a href='Controller/StudentController.php?view=delete&id=" .$student->id ."'>Delete</a></p>";
+			$i++;
 		}
 		
 	?>
 
         <br>
         <p><a href="Controller/HomeController.php?view=dashboard">Home page</a></p>
+        <p><a href="Controller/StudentController.php?view=add">Add Student</a></p>
 </div>

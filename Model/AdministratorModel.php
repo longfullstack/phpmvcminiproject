@@ -25,8 +25,21 @@ class AdministratorModel extends Model
 	public function detail($id) 
 	{
 		//Ta load data tu CSDL
-		$allStudent = $this->list();
-		return $allStudent[$id];
+		$query = "SELECT * FROM administrators WHERE id='" . $id . "'";
+		$results = $this->connection->query($query);
+		if($results)
+		{
+			$administrators = [];
+			while ($row = mysqli_fetch_assoc($results)) {
+				$administrators[] = new AdministratorEntity($row['id'], $row['username'], $row['password'], $row['created_at'], $row['updated_at']);
+			}
+			// Trả về giá trị cuối cùng
+			return isset($administrators[0]) ? $administrators[0] : false;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	public function save($data)

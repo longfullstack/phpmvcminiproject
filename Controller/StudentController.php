@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include_once("../Model/StudentModel.php");
 include_once("Controller.php");
 
@@ -9,11 +9,18 @@ include_once("Controller.php");
  */
 class  StudentController extends Controller
 {
+	protected $studentModel;
+
+	public function __construct()
+	{
+		$this->studentModel = new StudentModel();
+	}
 	/**
 	 * Định nghĩa hàm invoke để khởi tạo tất cả
 	 */
 	public function invoke()
 	{
+        $this->isLogin();
 		// Tạo một method invoke để gom các method dùng method get khởi tạo cùng nhau
         include_once("../View/Layouts/header.html");
 		if(isset($_GET['view'])) 
@@ -39,7 +46,7 @@ class  StudentController extends Controller
 					$this->error();
 					break;
 			}
-		} 
+		}
 		else 
 		{ // Check nếu không có studen id thì load view xem danh sách
 			$this->error();			
@@ -76,26 +83,44 @@ class  StudentController extends Controller
 	public function addPost() {
 		if(isset($_POST['addStudent'])) 
 		{
-
+			$this->studentModel->save($_POST);
+			header("Location:/Controller/StudentController.php?view=list");
 		}
 	}
 
-	public function update() 
+	public function update($data) 
 	{
-		include_once("../View/Students/update.html");
+		if(!isset($data['id']))
+		{
+			header("Location:/Controller/StudentController.php?view=list");
+		}
+		$student = $this->studentModel->detail($data['id']);
+		if($student) 
+		{
+			include_once("../View/Students/update.html");
+		}
+		else
+		{
+			header("Location:/Controller/StudentController.php?view=list");
+		}
 	}
 
 	public function updatePost() 
 	{
 		if(isset($_POST['updateStudent'])) 
 		{
-
+			$this->studentModel->save($_POST);
+			header("Location:/Controller/StudentController.php?view=list");
 		}
 	}
 
-	public function delete() 
+	public function delete($data) 
 	{
-
+		if(isset($data['id']))
+		{
+			$this->studentModel->delete($data['id']);
+		}
+		header("Location:/Controller/StudentController.php?view=list");
 	}
 
 };

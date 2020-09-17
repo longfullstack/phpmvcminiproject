@@ -26,9 +26,12 @@ Class HomeController extends Controller
                 case 'register':
                     $this->register($_GET);
                     break; 
-                 case 'dashboard':
+                case 'dashboard':
                     $this->dashboard();
                     break; 
+                case 'logout':
+                        $this->logout($_GET);
+                        break;
                 default:
                     $this->error();
                     break;  
@@ -49,11 +52,8 @@ Class HomeController extends Controller
     }
 
     public function dashboard()
-    {
-        if(!isset($_SESSION['user']))
-        {
-            header('Location:/Controller/HomeController?view=login');
-        }
+    {        
+        $this->isLogin();
         include_once("../View/Home/dashboard.html");
     }
 
@@ -64,6 +64,12 @@ Class HomeController extends Controller
             header('Location:/Controller/HomeController?view=dashboard');
         }
         include_once("../View/Home/login.html");
+    }
+
+    public function logout() 
+    {
+        session_destroy();
+        header('Location:/Controller/HomeController?view=login');
     }
 
     public function loginPost() 
